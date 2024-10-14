@@ -1,11 +1,12 @@
 import express from 'express';
 import cors from 'cors';
-import { connectDb } from './Config/db.js';
+import dotenv from 'dotenv';
+import { connectDb } from './Config/db.js'; 
 import userRouter from './Routes/UserRoute.js';
 import formRouter from './Routes/FormRoute.js';
-import dotenv from 'dotenv';
+import otpRouter from './Routes/OtpRouter.js'; 
 
-dotenv.config();
+dotenv.config(); 
 
 // App config
 const app = express();
@@ -31,12 +32,8 @@ connectDb()
 app.use('/api', userRouter);
 app.use('/api/form', formRouter);
 app.use('/images', express.static('uploads'));
+app.use('/api/otp', otpRouter); 
 
-// Test route
-app.get('/', (req, res) => {
-  res.send("Hello, it's working!");
-});
+app.get('/', (req, res) => res.send("Hello, it's working!"));
 
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
+app.listen(port, () => console.log(`Server is running on port ${port}`));
